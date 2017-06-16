@@ -7,6 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+/**
+ * This class implements the method download the interface IDownloader
+ * 
+ * @author AlexStrug
+ *
+ */
 public abstract class Downloader implements IDownloader {
 
 	public Path download(String sourceURL, String targetDirectory, String fileName) throws IOException {

@@ -1,7 +1,9 @@
 package com.sav.fileloader.tasks;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,20 +11,50 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sav.fileloader.model.Downloader;
-import com.sav.fileloader.model.MyRunnable;
 
+/**
+ * This class fulfills the condition of the task - 1.2 and 1.3.
+ * 
+ * Задание 1.2: Добавить возможность использовать в качестве входного параметра
+ * файл со списком ссылок и названий скачиваемых файлов.
+ * 
+ * Задание 1.3: Добавить возможность использования отдельных потоков для
+ * распараллеливания скачивания файлов по списку. Количество потоков необходимо
+ * принимать в качестве еще одного входящего параметра.
+ * 
+ * Например: -f — путь к файлу ссылок. -p — путь на файловой системе, куда нужно
+ * сохранять файлы. -t — колличство потоков (опционально).
+ * 
+ * Привествуются отчеты об ошибках, а так же финальный результат — сколько
+ * файлов скачано, скольно не скачано и какие из них не скачаны.
+ * 
+ * @author AlexStrug
+ *
+ */
 public class SecondTask extends Downloader {
-	
+
+	private final static Logger LOGGER = LoggerFactory.getLogger(SecondTask.class);
+
 	public static List<Pair<String, Boolean>> listAdd = new ArrayList<Pair<String, Boolean>>();
-	
-	public void startSecondTask(String f, String p, int number) throws Exception {
+
+	List<String> fileURL = new ArrayList<String>();
+	List<String> fileName = new ArrayList<String>();
+
+	/**
+	 * This method fulfills the condition of the task - 1.2.
+	 * 
+	 * @param f
+	 *            - path to the reference file.
+	 * @param p
+	 *            - path on the file system where you want to save the file.
+	 */
+	public void startSecondTask(String f, String p) throws Exception {
 
 		File file = new File(f);
-
-		List<String> fileURL = new ArrayList<String>();
-		List<String> fileName = new ArrayList<String>();
 
 		Scanner readerFile = new Scanner(new FileReader(file));
 
@@ -32,10 +64,50 @@ public class SecondTask extends Downloader {
 		}
 		readerFile.close();
 
-//		System.out.println(fileURL);
-//		System.out.println(fileName);
+		for (int i = 0; i < fileURL.size(); i++) {
+			try {
+				download(fileURL.get(i), p, fileName.get(i));
+				listAdd.add(Pair.of(fileName.get(i), true));
+			} catch (FileNotFoundException e) {
+				LOGGER.error("File not found: " + e.getMessage());
+			} catch (IOException e) {
+				LOGGER.error("This path not found or you do not have the access to save file in this place: "
+						+ e.getMessage());
+				listAdd.add(Pair.of(fileName.get(i), false));
+			} catch (Exception e) {
+				LOGGER.error("Something exception: ");
+				e.printStackTrace();
+				listAdd.add(Pair.of(fileName.get(i), false));
+			}
+		}
+	}
 
-		ExecutorService executor = Executors.newFixedThreadPool(number);
+	/**
+	 * This method overloading fulfills the condition of the task - 1.3.
+	 * 
+	 * @param f
+	 *            - path to the reference file.
+	 * @param p
+	 *            - path on the file system where you want to save the file.
+	 * @param numberThreads
+	 *            - quantity threads.
+	 */
+	public void startSecondTask(String f, String p, int numberThreads) throws Exception {
+
+		File file = new File(f);
+
+		Scanner readerFile = new Scanner(new FileReader(file));
+
+		while (readerFile.hasNext()) {
+			fileURL.add(readerFile.next());
+			fileName.add(readerFile.next());
+		}
+		readerFile.close();
+
+		// System.out.println(fileURL);
+		// System.out.println(fileName);
+
+		ExecutorService executor = Executors.newFixedThreadPool(numberThreads);
 
 		for (int i = 0; i < fileURL.size(); i++) {
 			String nameURL = fileURL.get(i);
@@ -51,7 +123,15 @@ public class SecondTask extends Downloader {
 		System.out.println("\nFinished all threads");
 	}
 
+	/**
+	 * This method prints a report of errors and successes.
+	 * 
+	 * @param listAdd
+	 *            - list of file names with Boolean expression on the
+	 *            downloaded.
+	 */
 	public void printResult(List<Pair<String, Boolean>> listAdd) {
+
 		int countFail = 0;
 		int countSuccess = 0;
 		for (Pair<String, Boolean> list : listAdd) {
@@ -63,7 +143,6 @@ public class SecondTask extends Downloader {
 		}
 		System.out.println("Count failed download: " + countFail);
 		System.out.println("Count success download: " + countSuccess);
-
 	}
 
 }
