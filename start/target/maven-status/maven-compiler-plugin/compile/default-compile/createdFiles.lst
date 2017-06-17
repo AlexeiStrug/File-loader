@@ -1,3 +1,5 @@
-com\sav\fileloader\start\MyThread.class
+com\sav\fileloader\model\Downloader$DownloadRunnable.class
+com\sav\fileloader\model\FirstTask.class
+com\sav\fileloader\model\IDownloader.class
 com\sav\fileloader\start\StartFileLoader.class
-com\sav\fileloader\start\Tuple.class
+com\sav\fileloader\model\Downloader.class

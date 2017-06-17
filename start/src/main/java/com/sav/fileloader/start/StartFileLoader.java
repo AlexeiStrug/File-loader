@@ -9,8 +9,7 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sav.fileloader.tasks.FirstTask;
-import com.sav.fileloader.tasks.SecondTask;
+import com.sav.fileloader.model.FirstTask;
 
 public class StartFileLoader {
 
@@ -18,37 +17,37 @@ public class StartFileLoader {
 
 	public static void main(String[] args) throws Exception {
 
-		FirstTask firstTask = new FirstTask();
-		SecondTask secondTask = new SecondTask();
+		FirstTask start = new FirstTask();
 
-		startCMD(firstTask, secondTask, args);
+		startCMD(start, args);
 
 	}
 
-	public static void startCMD(FirstTask firstTask, SecondTask secondTask, String[] args) {
+	public static void startCMD(FirstTask start, String[] args) {
 
 		String l, p, n, f, t;
 		CommandLine commandLine;
 		CommandLineParser parser = new DefaultParser();
+		
 		try {
 			commandLine = parser.parse(startOptions(), args);
 			if (commandLine.hasOption("l")) {
 				l = commandLine.getOptionValue("l");
 				p = commandLine.getOptionValue("p");
 				n = commandLine.getOptionValue("n");
-				firstTask.startFirstTast(l, p, n);
+				start.startByURL(l, p, n);
 			} else if (commandLine.hasOption("f")) {
 				f = commandLine.getOptionValue("f");
 				p = commandLine.getOptionValue("p");
 				if (commandLine.hasOption("t")) {
 					t = commandLine.getOptionValue("t");
 					int numberThreads = Integer.parseInt(t);
-					secondTask.startSecondTask(f, p, numberThreads);
+					start.startByFile(f, p, numberThreads);
 				} else {
-					secondTask.startSecondTask(f, p);
+					start.startByFile(f, p);
 				}
 				System.out.print("\n");
-				secondTask.printResult(SecondTask.listAdd);
+				start.printResult(FirstTask.listAdd);
 			}
 		} catch (ParseException e) {
 			LOGGER.error("Parse error: ");

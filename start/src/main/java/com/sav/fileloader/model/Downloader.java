@@ -12,8 +12,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sav.fileloader.tasks.SecondTask;
-
 /**
  * This class implements the method download the interface IDownloader
  * 
@@ -55,20 +53,20 @@ public abstract class Downloader implements IDownloader {
 
 		public void run() {
 
-			SecondTask secondTask = new SecondTask();
+			FirstTask start = new FirstTask();
 			try {
-				secondTask.download(nameURL, targetDirectory, nameFile);
-				SecondTask.listAdd.add(Pair.of(nameFile, true));
+				start.download(nameURL, targetDirectory, nameFile);
+				FirstTask.listAdd.add(Pair.of(nameFile, true));
 			} catch (FileNotFoundException e) {
 				LOGGER.error("File not found: " + e.getMessage());
 			} catch (IOException e) {
 				LOGGER.error("This path not found or you do not have the access to save file in this place: "
 						+ e.getMessage());
-				SecondTask.listAdd.add(Pair.of(nameFile, false));
+				FirstTask.listAdd.add(Pair.of(nameFile, false));
 			} catch (Exception e) {
 				LOGGER.error("Something exception: ");
 				e.printStackTrace();
-				SecondTask.listAdd.add(Pair.of(nameFile, false));
+				FirstTask.listAdd.add(Pair.of(nameFile, false));
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package com.sav.fileloader.tasks;
+package com.sav.fileloader.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,10 +14,19 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sav.fileloader.model.Downloader;
-
 /**
- * This class fulfills the condition of the task - 1.2 and 1.3.
+ * This class fulfills the condition of the task - 1.1, 1.2, 1.3.
+ * 
+ * Задание 1.1: Создать консольное приложение для загрузки файлов. Программа
+ * должна скачивать файлы по HTTP протоколу.
+ * 
+ * Входные параметры: l – ссылка на файл. p – путь на файловой системе, куда
+ * нужно сохранить файл. n – имя файла.
+ *
+ * Приветствуется, если вы будете предоставлять информацию об ошибках в удобном
+ * для рядового пользователя виде, например: "нет прав на сохранение в указанной
+ * директории" или "отсутствует файл по указанной ссылке". (Использовать
+ * английский или русский язык)
  * 
  * Задание 1.2: Добавить возможность использовать в качестве входного параметра
  * файл со списком ссылок и названий скачиваемых файлов.
@@ -35,14 +44,39 @@ import com.sav.fileloader.model.Downloader;
  * @author AlexStrug
  *
  */
-public class SecondTask extends Downloader {
+public class FirstTask extends Downloader {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(SecondTask.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(FirstTask.class);
 
 	public static List<Pair<String, Boolean>> listAdd = new ArrayList<Pair<String, Boolean>>();
 
 	List<String> fileURL = new ArrayList<String>();
 	List<String> fileName = new ArrayList<String>();
+
+	/**
+	 * This method fulfills the condition of the task - 1.1.
+	 * 
+	 * @param l
+	 *            - url on file.
+	 * @param p
+	 *            - path on the file system where you want to save the file.
+	 * @param n
+	 *            - file name.
+	 */
+	public void startByURL(String l, String p, String n) throws Exception {
+
+		try {
+			download(l, p, n);
+		} catch (FileNotFoundException e) {
+			LOGGER.error("File not found: " + e.getMessage());
+		} catch (IOException e) {
+			LOGGER.error(
+					"This path not found or you do not have the access to save file in this place: " + e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error("Something exception: ");
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * This method fulfills the condition of the task - 1.2.
@@ -52,7 +86,8 @@ public class SecondTask extends Downloader {
 	 * @param p
 	 *            - path on the file system where you want to save the file.
 	 */
-	public void startSecondTask(String f, String p) throws Exception {
+
+	public void startByFile(String f, String p) throws Exception {
 
 		File file = new File(f);
 
@@ -92,7 +127,7 @@ public class SecondTask extends Downloader {
 	 * @param numberThreads
 	 *            - quantity threads.
 	 */
-	public void startSecondTask(String f, String p, int numberThreads) throws Exception {
+	public void startByFile(String f, String p, int numberThreads) throws Exception {
 
 		File file = new File(f);
 
