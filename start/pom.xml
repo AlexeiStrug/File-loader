@@ -7,9 +7,6 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<artifactId>start</artifactId>
-	<packaging>jar</packaging>
-
 	<dependencies>
 
 

@@ -112,7 +112,7 @@ public class SecondTask extends Downloader {
 		for (int i = 0; i < fileURL.size(); i++) {
 			String nameURL = fileURL.get(i);
 			String nameFile = fileName.get(i);
-			Runnable worker = new MyRunnable(nameURL, p, nameFile);
+			Runnable worker = new DownloadRunnable(nameURL, p, nameFile);
 			executor.execute(worker);
 		}
 		executor.shutdown();
