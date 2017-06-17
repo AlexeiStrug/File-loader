@@ -44,9 +44,9 @@ import org.slf4j.LoggerFactory;
  * @author AlexStrug
  *
  */
-public class FirstTask extends Downloader {
+public class FileLoader extends Downloader {
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(FirstTask.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(FileLoader.class);
 
 	public static List<Pair<String, Boolean>> listAdd = new ArrayList<Pair<String, Boolean>>();
 

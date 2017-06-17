@@ -53,20 +53,20 @@ public abstract class Downloader implements IDownloader {
 
 		public void run() {
 
-			FirstTask start = new FirstTask();
+			FileLoader start = new FileLoader();
 			try {
 				start.download(nameURL, targetDirectory, nameFile);
-				FirstTask.listAdd.add(Pair.of(nameFile, true));
+				FileLoader.listAdd.add(Pair.of(nameFile, true));
 			} catch (FileNotFoundException e) {
 				LOGGER.error("File not found: " + e.getMessage());
 			} catch (IOException e) {
 				LOGGER.error("This path not found or you do not have the access to save file in this place: "
 						+ e.getMessage());
-				FirstTask.listAdd.add(Pair.of(nameFile, false));
+				FileLoader.listAdd.add(Pair.of(nameFile, false));
 			} catch (Exception e) {
 				LOGGER.error("Something exception: ");
 				e.printStackTrace();
-				FirstTask.listAdd.add(Pair.of(nameFile, false));
+				FileLoader.listAdd.add(Pair.of(nameFile, false));
 			}
 		}
 	}

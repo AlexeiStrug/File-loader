@@ -9,7 +9,7 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sav.fileloader.model.FirstTask;
+import com.sav.fileloader.model.FileLoader;
 
 public class StartFileLoader {
 
@@ -17,13 +17,13 @@ public class StartFileLoader {
 
 	public static void main(String[] args) throws Exception {
 
-		FirstTask start = new FirstTask();
+		FileLoader startFileLoader = new FileLoader();
 
-		startCMD(start, args);
+		startCMD(startFileLoader, args);
 
 	}
 
-	public static void startCMD(FirstTask start, String[] args) {
+	public static void startCMD(FileLoader startFileLoader, String[] args) {
 
 		String l, p, n, f, t;
 		CommandLine commandLine;
@@ -35,19 +35,19 @@ public class StartFileLoader {
 				l = commandLine.getOptionValue("l");
 				p = commandLine.getOptionValue("p");
 				n = commandLine.getOptionValue("n");
-				start.startByURL(l, p, n);
+				startFileLoader.startByURL(l, p, n);
 			} else if (commandLine.hasOption("f")) {
 				f = commandLine.getOptionValue("f");
 				p = commandLine.getOptionValue("p");
 				if (commandLine.hasOption("t")) {
 					t = commandLine.getOptionValue("t");
 					int numberThreads = Integer.parseInt(t);
-					start.startByFile(f, p, numberThreads);
+					startFileLoader.startByFile(f, p, numberThreads);
 				} else {
-					start.startByFile(f, p);
+					startFileLoader.startByFile(f, p);
 				}
 				System.out.print("\n");
-				start.printResult(FirstTask.listAdd);
+				startFileLoader.printResult(FileLoader.listAdd);
 			}
 		} catch (ParseException e) {
 			LOGGER.error("Parse error: ");
