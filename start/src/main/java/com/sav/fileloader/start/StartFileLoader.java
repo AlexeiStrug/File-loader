@@ -15,6 +15,11 @@ public class StartFileLoader {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(StartFileLoader.class);
 
+	public static String ERROR_MESSAGE = "Error, required input parameters:\n" + "\n"
+			+ "  -l – url on file OR -f – path to the reference file with url\n"
+			+ "  -p – path on the file system where you want to save the file\n"
+			+ "  -n – file name(with argument -l)\n" + "  -t — quantity threads (optional)\n";
+
 	public static void main(String[] args) throws Exception {
 
 		FileLoader startFileLoader = new FileLoader();
@@ -28,7 +33,12 @@ public class StartFileLoader {
 		String l, p, n, f, t;
 		CommandLine commandLine;
 		CommandLineParser parser = new DefaultParser();
-		
+
+		if (args.length < 2) {
+			System.out.println(ERROR_MESSAGE);
+			return;
+		}
+
 		try {
 			commandLine = parser.parse(startOptions(), args);
 			if (commandLine.hasOption("l")) {
@@ -59,13 +69,6 @@ public class StartFileLoader {
 	}
 
 	public static Options startOptions() {
-
-		// String[] testArgs = { "-l",
-		// "https://pp.userapi.com/c636416/v636416672/3b75b/37H7X1Rngj0.jpg",
-		// "-p", "D:\\",
-		// "-n", "first.jpg", };
-		// String[] testArgs1 = { "-f", "C://file.txt", "-p", "D:\\", "-t", "2",
-		// };
 
 		Option option_l = Option.builder("l").hasArg().desc("The l option - url on file").build();
 		Option option_p = Option.builder("p").hasArg().required(true)

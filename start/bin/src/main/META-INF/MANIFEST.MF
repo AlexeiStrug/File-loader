@@ -1,1 +1,0 @@
-Main-Class: com.sav.fileloader.start.StartFileLoader

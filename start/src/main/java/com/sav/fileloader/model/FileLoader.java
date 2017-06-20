@@ -67,6 +67,7 @@ public class FileLoader extends Downloader {
 
 		try {
 			download(l, p, n);
+			System.out.print("Success download! \n");
 		} catch (FileNotFoundException e) {
 			LOGGER.error("File not found: " + e.getMessage());
 		} catch (IOException e) {
@@ -138,9 +139,6 @@ public class FileLoader extends Downloader {
 			fileName.add(readerFile.next());
 		}
 		readerFile.close();
-
-		// System.out.println(fileURL);
-		// System.out.println(fileName);
 
 		ExecutorService executor = Executors.newFixedThreadPool(numberThreads);
 

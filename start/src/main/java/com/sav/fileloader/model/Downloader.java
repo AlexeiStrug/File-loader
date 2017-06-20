@@ -21,7 +21,7 @@ import com.sav.fileloader.model.IDownloader;
  * @author AlexStrug
  *
  */
-public abstract class Downloader implements IDownloader {
+public class Downloader implements IDownloader {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(Downloader.class);
 	
