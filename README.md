@@ -8,9 +8,11 @@ mvn clean compile assembly:single
 java -jar start.jar -l https://pp.userapi.com/c636416/v636416672/3b75b/37H7X1Rngj0.jpg -p D:\ -n first.jpg
 java -jar start.jar -f C://file.txt -p D:\ 
 ```
+В папке ["Test files"](https://github.com/AlexeiStrug/File-loader/tree/master/Test%20files) лежат файлы через которые тестировалось приложение.
+
 # Тестовое задание Java
 
-Готовое задание должно быть доступно на GitHub. В Readme.md файле опишите, как запустить вашу программу.
+Готовое задание должно быть доступно на GitHub. В [Readme.md](https://github.com/AlexeiStrug/File-loader/blob/master/README.md) файле опишите, как запустить вашу программу.
 Программы должны быть написаны на Java 8. Для сборки использовать Maven.
 
 ### Задание 1.
