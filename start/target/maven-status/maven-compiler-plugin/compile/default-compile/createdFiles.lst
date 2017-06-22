@@ -1,5 +1,10 @@
+com\sav\fileloader\parsers\ParserCSV.class
+com\sav\fileloader\parsers\ParserJSON.class
+com\sav\fileloader\parsers\IParser.class
 com\sav\fileloader\model\FileLoader.class
+com\sav\fileloader\parsers\ParserTXT.class
 com\sav\fileloader\model\Downloader$DownloadRunnable.class
 com\sav\fileloader\model\IDownloader.class
 com\sav\fileloader\start\StartFileLoader.class
 com\sav\fileloader\model\Downloader.class
+com\sav\fileloader\parsers\ParserXML.class

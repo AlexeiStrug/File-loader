@@ -20,7 +20,7 @@ public class StartFileLoader {
 			+ "  -p – path on the file system where you want to save the file\n"
 			+ "  -n – file name(with argument -l)\n" + "  -t — quantity threads (optional)\n";
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
 		FileLoader startFileLoader = new FileLoader();
 
