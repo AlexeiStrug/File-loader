@@ -148,21 +148,26 @@ public class FileLoader extends Downloader {
 	 */
 	public void startByFile(String f, String p, int numberThreads) {
 
-		File file = new File(f);
+		String formatFile = f.substring(f.lastIndexOf('.') + 1);
 
-		Scanner readerFile = null;
-		try {
-			readerFile = new Scanner(new FileReader(file));
-		} catch (FileNotFoundException e) {
-			LOGGER.error("File not found: " + e.getMessage());
-			e.printStackTrace();
+		switch (formatFile) {
+		case "txt":
+			ParserTXT txtFile = new ParserTXT();
+			txtFile.startParser(f);
+			break;
+		case "csv":
+			ParserCSV csvFile = new ParserCSV();
+			csvFile.startParser(f);
+			break;
+		case "json":
+			ParserJSON jsonFile = new ParserJSON();
+			jsonFile.startParser(f);
+			break;
+		case "xml":
+			ParserXML xmlFile = new ParserXML();
+			xmlFile.startParser(f);
+			break;
 		}
-
-		while (readerFile.hasNext()) {
-			fileURL.add(readerFile.next());
-			fileName.add(readerFile.next());
-		}
-		readerFile.close();
 
 		ExecutorService executor = Executors.newFixedThreadPool(numberThreads);
 
